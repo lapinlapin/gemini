@@ -2,6 +2,7 @@
 .travis.yml
 .jshintignore
 .jshintrc
+.jscsrc
 .npmignore
 test/
 coverage/

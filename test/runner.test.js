@@ -9,7 +9,7 @@ var q = require('q'),
         'rootUrl: http://example.com',
         'gridUrl: http://grid.example.com',
         'browsers: ',
-        '  - browser',
+        '  - browser'
     ].join('\n');
 
 function addState(suite, name) {
@@ -24,7 +24,7 @@ describe('runner', function() {
         var browser = {
             fullName: 'browser',
             createActionSequence: this.sinon.stub().returns({
-                perform: this.sinon.stub().returns(q.resolve()) 
+                perform: this.sinon.stub().returns(q.resolve())
             }),
 
             open: this.sinon.stub().returns(q.resolve()),
@@ -42,7 +42,7 @@ describe('runner', function() {
             stop: function() {}
         };
 
-        this.suite = new createSuite('suite');
+        this.suite = createSuite('suite');
         this.suite.url = '/path';
 
         this.sinon.stub(require('child_process'), 'exec').withArgs('gm -version').callsArgWith(1, null, '', '');
@@ -50,7 +50,6 @@ describe('runner', function() {
         //require runner here to make stub above take effect
         var Runner = require('../lib/runner');
         this.runner = new Runner(new Config('/root', CONFIG_TEXT), this.launcher);
-
     });
 
     afterEach(function() {
@@ -91,7 +90,9 @@ describe('runner', function() {
         });
 
         it('should peroform before sequence ', function() {
-            var sequence = { perform: this.sinon.stub().returns(q())};
+            var sequence = {
+                perform: this.sinon.stub().returns(q())
+            };
 
             this.browser.createActionSequence.returns(sequence);
 
@@ -102,7 +103,6 @@ describe('runner', function() {
             });
         });
 
-
         it('should emit `beginState` for each suite state', function() {
             var spy = this.sinon.spy();
 
@@ -112,14 +112,13 @@ describe('runner', function() {
             return this.runner.run([this.suite]).then(function() {
                 sinon.assert.calledWith(spy, 'suite', 'state', 'browser');
             });
-
         });
 
         it('should not emit `beginState` if state is skipped', function() {
             var spy = this.sinon.spy();
             this.suite.addState({
                 name: 'state',
-                suite: this.suite, 
+                suite: this.suite,
                 shouldSkip: this.sinon.stub().returns(true)
             });
             this.runner.on('beginState', spy);
@@ -131,7 +130,7 @@ describe('runner', function() {
         it('should emit `skipState` if state is skipped', function() {
             var spy = this.sinon.spy();
             this.suite.addState({
-                name: 'state', 
+                name: 'state',
                 suite: this.suite,
                 shouldSkip: this.sinon.stub().returns(true)
             });
@@ -225,7 +224,7 @@ describe('runner', function() {
         it('should not emit `endState` if state is skipped', function() {
             var spy = this.sinon.spy();
             this.suite.addState({
-                name: 'state', 
+                name: 'state',
                 suite: this.suite,
                 shouldSkip: this.sinon.stub().returns(true)
             });
@@ -251,7 +250,6 @@ describe('runner', function() {
                     beginState.withArgs('suite', 'state2')
                 );
             });
-            
         });
 
         it('should emit `endSuite` for each suite', function() {
@@ -264,7 +262,7 @@ describe('runner', function() {
 
         it('should also run child suites automatically', function() {
             var spy = this.sinon.spy();
-            
+
             createSuite('child', this.suite);
 
             this.runner.on('beginSuite', spy);
@@ -276,7 +274,7 @@ describe('runner', function() {
 
         it('should finish parent suite only after all children', function() {
             var spy = this.sinon.spy();
-            
+
             createSuite('child', this.suite);
 
             this.runner.on('endSuite', spy);
@@ -331,10 +329,10 @@ describe('runner', function() {
 
         it('should emit events in correct order', function() {
             var begin = this.sinon.spy(),
-                beginSuite= this.sinon.spy(),
+                beginSuite = this.sinon.spy(),
                 beginState = this.sinon.spy(),
                 endState = this.sinon.spy(),
-                endSuite= this.sinon.spy(),
+                endSuite = this.sinon.spy(),
                 end = this.sinon.spy();
 
             addState(this.suite, 'state');

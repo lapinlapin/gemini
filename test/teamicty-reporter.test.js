@@ -4,7 +4,6 @@ var sinon = require('sinon'),
     teamictyReporter = require('../lib/reporters/teamcity');
 
 describe('TeamCity reporter', function() {
-
     function assertLastWrite(string) {
         process.stdout.write.lastCall.args[0].must.be(string);
     }
@@ -108,5 +107,4 @@ describe('TeamCity reporter', function() {
         this.emitter.emit('end');
         assertLastWrite('##teamcity[testSuiteFinished name=\'gemini\']\n');
     });
-
 });

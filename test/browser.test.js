@@ -108,7 +108,7 @@ describe('browser', function() {
             return this.browser.captureState(this.state).then(function() {
                 sinon.assert.calledWith(elementRect.getMultiple, sinon.match([
                     sinon.match.instanceOf(Element).and(sinon.match.has('selector', '.selector1')),
-                    sinon.match.instanceOf(Element).and(sinon.match.has('selector', '.selector2')),
+                    sinon.match.instanceOf(Element).and(sinon.match.has('selector', '.selector2'))
                 ]));
             });
         });

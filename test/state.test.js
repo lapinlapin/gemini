@@ -2,7 +2,6 @@
 var State = require('../lib/state');
 
 describe('state', function() {
-
     describe('shouldSkip()', function() {
         beforeEach(function() {
             this.suite = {
@@ -51,7 +50,5 @@ describe('state', function() {
             this.state.shouldSkip({name: 'browser', version: '1.1'}).must.be.true();
         });
     });
-
     //describe('the rest of state functionality');
-
 });
